@@ -17,41 +17,38 @@ export class Generator {
     private static removeNumbers(sudoku : Sudoku, quantity: number) {
 
         const range = Util.shuffle(Util.range(0, PuzzleSize * PuzzleSize));
-        const numbers = Util.shuffle(Util.range(1, PuzzleSize));
-        let index = 0;
-        let count = 0;
+        let index = 0, count = 0;
 
         while (count < quantity) {
-			
-			index = (index + 2) % (PuzzleSize * PuzzleSize);
 
             const [row, col] = [Math.floor((range[index]) / PuzzleSize), (range[index]) % PuzzleSize];
             const answer = sudoku.get(row, col);
+
+            sudoku.set(row, col, 0);
             
-            if (answer === 0)
-				continue;
-
-            const possibilities = numbers.filter(x => x != answer && sudoku.isValid(row, col, x));
-                
-            let foundOtherSolution = false;
-
-            for (const possibility of possibilities) {
-
-                const clone = sudoku.clone();
-                clone.set(row, col, possibility);
-                
-                Solver.solve(clone);
-                
-                if (clone.getNextEmptyCell()[0] === -1) {
-                    foundOtherSolution = true;
-                    break;   
-                }
-            }
-            
-            if (!foundOtherSolution) {
-                sudoku.set(row, col, 0);
+            if (this.checkIfStillSolvable(sudoku, row, col, answer)) {
                 count++;
+            } else {
+                sudoku.set(row, col, answer);
             }
+                
+            index = (index + 2) % (PuzzleSize * PuzzleSize);
         }
+    }
+
+    private static checkIfStillSolvable(sudoku : Sudoku, row : number, col : number, answer : number) {
+
+        const possibilities = Util.range(1, PuzzleSize).filter(n => n != answer && sudoku.isValid(row, col, n));
+        
+        for (const possibility of possibilities) {
+
+            const clone = sudoku.clone();
+            clone.set(row, col, possibility);
+            
+            if (Solver.solve(clone))
+                return false;
+        }
+
+        return true;
     }
 }

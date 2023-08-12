@@ -19,7 +19,7 @@ export class Sudoku extends Matrix {
         const sudoku = new Sudoku();
 
         for (let row = 0; row < PuzzleSize; row++)
-            sudoku.setRow(row, [...this.getRow(row)]);
+            sudoku.setRow(row, this.getRow(row).slice());
 
         return sudoku;
     }

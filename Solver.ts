@@ -1,5 +1,5 @@
 import { Sudoku } from "./Sudoku";
-import { BoxSize, PuzzleSize } from "./Constant";
+import { PuzzleSize } from "./Constant";
 import { Util } from "./Util";
 
 export class Solver {
