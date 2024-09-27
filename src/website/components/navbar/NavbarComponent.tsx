@@ -31,7 +31,7 @@ export const Navbar = () => {
                             <Link className="nav-link" aria-current="page" to={"/"}>Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link style={{ cursor: "pointer" }} className="nav-link" aria-current="page" to={"/print"}>Print</Link>
+                            { /*<Link style={{ cursor: "pointer" }} className="nav-link" aria-current="page" to={"/print"}>Print</Link> */ }
                         </li>
                     </ul>
                 </div>
