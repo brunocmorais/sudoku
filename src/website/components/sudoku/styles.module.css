@@ -1,0 +1,11 @@
+.sudoku {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+}

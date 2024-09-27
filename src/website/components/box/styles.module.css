@@ -1,0 +1,11 @@
+.box {
+    display: flex;
+    /* justify-content: left; */
+    flex-direction: column;
+    flex-shrink: 0;
+    border: solid 2px #AAA;
+}
+
+.row {
+    display: flex;
+}

@@ -1,3 +1,3 @@
 export const BoxSize = 3;
 export const PuzzleSize = BoxSize * BoxSize;
-export const NumbersToRemove = 53;
+export const NumbersToRemove = 50;

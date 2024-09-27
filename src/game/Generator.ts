@@ -11,6 +11,10 @@ export class Generator {
         Solver.solve(sudoku);
         Generator.removeNumbers(sudoku, NumbersToRemove);
 
+        for (let i = 0; i < PuzzleSize; i++)
+            for (let j = 0; j < PuzzleSize; j++)
+                sudoku.setFixed(i, j, (sudoku.get(i, j) > 0));
+
         return sudoku;
     }
 

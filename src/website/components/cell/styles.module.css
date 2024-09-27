@@ -1,0 +1,31 @@
+:global(body.dark) .cell {
+    border: solid 1px #AAA;
+    justify-content: center;
+    display: flex;
+    cursor: default;
+    color: white;
+}
+
+.cell {
+    border: solid 1px black;
+    justify-content: center;
+    display: flex;
+    cursor: default;
+    color: black;
+}
+
+.fixed {
+    font-weight: bolder;
+}
+
+.field {
+    color: skyblue;
+}
+
+.cell:hover {
+    background-color: #666;
+}
+
+.active {
+    background-color: #888 !important;
+}

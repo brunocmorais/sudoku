@@ -4,7 +4,10 @@ import { BoxSize, PuzzleSize } from "./Constant";
 
 export class Sudoku extends Matrix {
 
+    public activeCell : number = 0;
+
     public constructor() {
+        
         super(PuzzleSize);
     }
 
@@ -12,7 +15,7 @@ export class Sudoku extends Matrix {
 
         return this.isValidRow(row, value) && 
             this.isValidColumn(col, value) &&
-            this.getBox(row, col).isValid(value);
+            this.getContainingBox(row, col).isValid(value);
     }
 
     public clone() {
@@ -22,29 +25,6 @@ export class Sudoku extends Matrix {
             sudoku.setRow(row, this.getRow(row).slice());
 
         return sudoku;
-    }
-
-    public print() {
-
-        let result = "";
-
-        for (let row = 0; row < PuzzleSize; row++) {
-            for (let col = 0; col < PuzzleSize; col++) {
-                const value = this.get(row, col);
-
-                result += (value === 0 ? " " : value) + " ";
-
-                if ((col + 1) % BoxSize === 0 && (col + 1) != PuzzleSize)
-                    result += "| ";
-            }
-
-            result += "\n";
-
-            if ((row + 1) % BoxSize === 0 && (row + 1) != PuzzleSize)
-                result += ("-").repeat(((BoxSize * 2) * BoxSize) + BoxSize) + "\n";
-        }
-    
-        return result;
     }
 
     public getNextEmptyCell() {
@@ -65,7 +45,7 @@ export class Sudoku extends Matrix {
     private isValidColumn = (col : number, value : number) => 
         this.getCol(col).indexOf(value) < 0;
     
-    private getBox(row : number, col : number) {
+    private getContainingBox(row : number, col : number) {
     
         const box = new Box();
         const boxNumber = (Math.floor(row / BoxSize) * BoxSize) + (Math.floor(col / BoxSize));
@@ -76,6 +56,20 @@ export class Sudoku extends Matrix {
             for (let col = 0; col < BoxSize; col++)
                 box.set(row, col, this.get(boxRowNumber + row, boxColNumber + col));
     
+        return box;
+    }
+
+    public getBox(row : number, col : number) {
+
+        const box = new Box();
+
+        for (let i = row * BoxSize; i < (row * BoxSize) + BoxSize; i++) {
+            for (let j = col * BoxSize; j < (col * BoxSize) + BoxSize; j++) {
+                box.set(i - (row * BoxSize), j - (col * BoxSize), this.get(i, j));
+                box.setFixed(i - (row * BoxSize), j - (col * BoxSize), this.getFixed(i, j));
+            }
+        }
+            
         return box;
     }
 }
